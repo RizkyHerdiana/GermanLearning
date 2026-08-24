@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz - Blitz Deutsch</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            max-width: 800px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        /* =========================
+           START SCREEN
+        ========================= */
+
+        .start-screen {
+            background: white;
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .start-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .start-screen h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .start-screen h1 span {
+            color: #2563eb;
+        }
+
+        .start-screen p {
+            color: #6b7280;
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0 auto 30px;
+        }
+
+        .info-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 18px 10px;
+        }
+
+        .info-box .icon {
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .info-box small {
+            color: #6b7280;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .start-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 16px 35px;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           QUIZ HEADER
+        ========================= */
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .level {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: flex;
+            gap: 8px;
+        }
+
+        .stat {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           TIMER
+        ========================= */
+
+        .timer-area {
+            margin-bottom: 25px;
+        }
+
+        .timer-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .timer-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            width: 100%;
+            background: #2563eb;
+            transition: width 1s linear;
+        }
+
+        /* =========================
+           QUESTION
+        ========================= */
+
+        .question-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            padding: 45px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .question-label {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .question-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .speak-btn {
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 20px;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
+
+        .speak-btn:hover {
+            background: #dbeafe;
+        }
+
+        /* =========================
+           OPTIONS
+        ========================= */
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .option {
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 15px;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .option.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .option.wrong {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        .feedback {
+            min-height: 25px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            color: #16a34a;
+        }
+
+        .feedback.wrong {
+            color: #dc2626;
+        }
+
+        /* =========================
+           GAME OVER
+        ========================= */
+
+        .game-over {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            padding: 50px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .trophy {
+            font-size: 75px;
+            margin-bottom: 15px;
+        }
+
+        .game-over h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .game-over p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .result {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .result span {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .result strong {
+            color: #2563eb;
+            font-size: 30px;
+        }
+
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .progress-btn {
+            display: inline-block;
+            padding: 16px 25px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 0 12px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+
+            .nav-links {
+                gap: 7px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+
+            .start-screen {
+                padding: 40px 20px;
+            }
+
+            .start-screen h1 {
+                font-size: 31px;
+            }
+
+            .info-container {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-header {
+                align-items: flex-start;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+
+            .stat {
+                font-size: 11px;
+                padding: 7px 9px;
+            }
+
+            .question-card {
+                padding: 35px 18px;
+            }
+
+            .question {
+                font-size: 38px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .results {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            Blitz <span>Deutsch</span> 🇩🇪
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="vocabulary.html">Vocabulary</a>
+
+            <a href="phrases.html">Phrases</a>
+
+            <a href="quiz.html">Quiz</a>
+
+            <a href="progress.html">Progress</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <div id="game"></div>
+
+    </main>
+
+
+    <script>
+
+        /* =========================
+           VOCABULARY A1
+        ========================= */
+
+        const vocabulary = [
+
+            { de: "Hallo", id: "Halo" },
+
+            { de: "Guten Tag", id: "Selamat siang" },
+
+            { de: "Danke", id: "Terima kasih" },
+
+            { de: "Bitte", id: "Sama-sama / Silakan" },
+
+            { de: "Auf Wiedersehen", id: "Sampai jumpa lagi" },
+
+            { de: "der Name", id: "Nama" },
+
+            { de: "Ich heiße", id: "Nama saya" },
+
+            { de: "woher", id: "Dari mana" },
+
+            { de: "wohnen", id: "Tinggal" },
+
+            { de: "die Sprache", id: "Bahasa" },
+
+            { de: "lernen", id: "Belajar" },
+
+            { de: "das Wasser", id: "Air" },
+
+            { de: "das Brot", id: "Roti" },
+
+            { de: "essen", id: "Makan" },
+
+            { de: "trinken", id: "Minum" },
+
+            { de: "die Musik", id: "Musik" },
+
+            { de: "das Buch", id: "Buku" },
+
+            { de: "arbeiten", id: "Bekerja" },
+
+            { de: "die Stadt", id: "Kota" },
+
+            { de: "der Freund", id: "Teman" }
+
+        ];
+
+
+        /* =========================
+           GAME VARIABLES
+        ========================= */
+
+        let score = 0;
+
+        let lives = 3;
+
+        let level = 1;
+
+        let streak = 0;
+
+        let bestStreak = 0;
+
+        let currentQuestion = null;
+
+        let timeLeft = 15;
+
+        let timer = null;
+
+        let locked = false;
+
+
+        /* =========================
+           SHUFFLE
+        ========================= */
+
+        function shuffle(array) {
+
+            const copy = [...array];
+
+            for (
+                let i = copy.length - 1;
+                i > 0;
+                i--
+            ) {
+
+                const j =
+                    Math.floor(
+                        Math.random() * (i + 1)
+                    );
+
+                [
+                    copy[i],
+                    copy[j]
+                ] = [
+                    copy[j],
+                    copy[i]
+                ];
+            }
+
+            return copy;
+        }
+
+
+        /* =========================
+           START
+        ========================= */
+
+        function startGame() {
+
+            clearInterval(timer);
+
+            score = 0;
+
+            lives = 3;
+
+            level = 1;
+
+            streak = 0;
+
+            bestStreak = 0;
+
+            locked = false;
+
+            showQuestion();
+        }
+
+
+        /* =========================
+           QUESTION
+        ========================= */
+
+        function showQuestion() {
+
+            clearInterval(timer);
+
+            locked = false;
+
+            const random =
+                Math.floor(
+                    Math.random() *
+                    vocabulary.length
+                );
+
+            currentQuestion =
+                vocabulary[random];
+
+
+            const wrongAnswers =
+                shuffle(
+                    vocabulary.filter(
+                        word =>
+                            word.de !==
+                            currentQuestion.de
+                    )
+                ).slice(0, 3);
+
+
+            const options =
+                shuffle([
+                    currentQuestion,
+                    ...wrongAnswers
+                ]);
+
+
+            timeLeft =
+                Math.max(
+                    15 - level + 1,
+                    5
+                );
+
+
+            document.getElementById(
+                "game"
+            ).innerHTML = `
+
+                <div class="quiz-header">
+
+                    <div class="level">
+                        Level ${level}
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="stat">
+                            ❤️ ${lives}
+                        </div>
+
+                        <div class="stat">
+                            ⭐ ${score}
+                        </div>
+
+                        <div class="stat">
+                            🔥 ${streak}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timer-area">
+
+                    <div class="timer-text">
+
+                        <span>
+                            Waktu
+                        </span>
+
+                        <strong id="time">
+                            ${timeLeft}s
+                        </strong>
+
+                    </div>
+
+                    <div class="timer-bar">
+
+                        <div
+                            id="timerFill"
+                            class="timer-fill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="question-card">
+
+                    <div class="question-label">
+                        Apa arti kata bahasa Jerman ini?
+                    </div>
+
+                    <div class="question">
+                        ${currentQuestion.de}
+                    </div>
+
+                    <div class="question-description">
+                        Pilih jawaban yang benar.
+                    </div>
+
+                    <button
+                        class="speak-btn"
+                        onclick="speak()"
+                    >
+                        🔊
+                    </button>
+
+
+                    <div class="options">
+
+                        ${options.map(
+                            option => `
+
+                            <button
+                                class="option"
+                                onclick="answer(this, '${option.id.replace(/'/g, "\\'")}')"
+                            >
+                                ${option.id}
+                            </button>
+
+                        `
+                        ).join("")}
+
+                    </div>
+
+
+                    <div
+                        id="feedback"
+                        class="feedback"
+                    ></div>
+
+                </div>
+
+            `;
+
+
+            startTimer();
+        }
+
+
+        /* =========================
+           TIMER
+        ========================= */
+
+        function startTimer() {
+
+            updateTimer();
+
+            timer =
+                setInterval(
+                    () => {
+
+                        if (locked) {
+
+                            clearInterval(timer);
+
+                            return;
+                        }
+
+
+                        timeLeft--;
+
+                        updateTimer();
+
+
+                        if (timeLeft <= 0) {
+
+                            clearInterval(timer);
+
+                            wrongAnswer(true);
+                        }
+
+                    },
+                    1000
+                );
+        }
+
+
+        function updateTimer() {
+
+            const time =
+                document.getElementById("time");
+
+            const fill =
+                document.getElementById(
+                    "timerFill"
+                );
+
+
+            if (!time || !fill) return;
+
+
+            time.innerText =
+                timeLeft + "s";
+
+
+            const maxTime =
+                Math.max(
+                    15 - level + 1,
+                    5
+                );
+
+
+            fill.style.width =
+                (
+                    timeLeft /
+                    maxTime *
+                    100
+                ) + "%";
+        }
+
+
+        /* =========================
+           ANSWER
+        ========================= */
+
+        function answer(button, selected) {
+
+            if (locked) return;
+
+            locked = true;
+
+            clearInterval(timer);
+
+            const buttons =
+                document.querySelectorAll(
+                    ".option"
+                );
+
+
+            buttons.forEach(
+                btn => {
+                    btn.disabled = true;
+                }
+            );
+
+
+            if (
+                selected ===
+                currentQuestion.id
+            ) {
+
+                correctAnswer(button);
+
+            } else {
+
+                wrongAnswer(false, button);
+            }
+        }
+
+
+        /* =========================
+           CORRECT
+        ========================= */
+
+        function correctAnswer(button) {
+
+            button.classList.add("correct");
+
+
+            streak++;
+
+
+            if (
+                streak >
+                bestStreak
+            ) {
+
+                bestStreak =
+                    streak;
+            }
+
+
+            const points =
+                10 +
+                (
+                    level * 5
+                ) +
+                (
+                    streak * 2
+                );
+
+
+            score += points;
+
+
+            const feedback =
+                document.getElementById(
+                    "feedback"
+                );
+
+
+            feedback.innerText =
+                "🎉 Richtig! +" +
+                points +
+                " XP";
+
+
+            feedback.className =
+                "feedback correct";
+
+
+            speak();
+
+
+            if (
+                streak % 5 === 0
+            ) {
+
+                level++;
+            }
+
+
+            setTimeout(
+                showQuestion,
+                1200
+            );
+        }
+
+        /* =========================
+           WRONG (LANJUTAN)
+        ========================= */
+
+        function wrongAnswer(
+            timeout = false,
+            selectedButton = null
+        ) {
+
+            if (!locked) {
+                locked = true;
+                clearInterval(timer);
+            }
+
+            const buttons = document.querySelectorAll(".option");
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedButton) {
+                selectedButton.classList.add("wrong");
+            }
+
+            // Tunjukkan jawaban yang benar
+            buttons.forEach(btn => {
+                if (btn.innerText.trim() === currentQuestion.id) {
+                    btn.classList.add("correct");
+                }
+            });
+
+            lives--;
+            streak = 0;
+
+            const feedback = document.getElementById("feedback");
+            if (timeout) {
+                feedback.innerText = `⏰ Waktu habis! Jawaban benar: ${currentQuestion.id}`;
+            } else {
+                feedback.innerText = `❌ Falsch! Jawaban benar: ${currentQuestion.id}`;
+            }
+            feedback.className = "feedback wrong";
+
+            if (lives <= 0) {
+                setTimeout(showGameOver, 1500);
+            } else {
+                setTimeout(showQuestion, 1500);
+            }
+        }
+
+
+        /* =========================
+           AUDIO / TEXT-TO-SPEECH
+        ========================= */
+
+        function speak() {
+            if ('speechSynthesis' in window && currentQuestion) {
+                const utterance = new SpeechSynthesisUtterance(currentQuestion.de);
+                utterance.lang = 'de-DE';
+                window.speechSynthesis.cancel(); // Hentikan suara sebelumnya jika ada
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+
+        /* =========================
+           GAME OVER
+        ========================= */
+
+        function showGameOver() {
+            // Simpan progres ke LocalStorage (opsional)
+            const savedBest = localStorage.getItem("blitz_best_score") || 0;
+            if (score > savedBest) {
+                localStorage.setItem("blitz_best_score", score);
+            }
+
+            document.getElementById("game").innerHTML = `
+                <div class="game-over">
+                    <div class="trophy">🏆</div>
+                    <h1>Permainan Selesai!</h1>
+                    <p>Kerja bagus! Terus berlatih untuk meningkatkan kosa kata bahasa Jermanmu.</p>
+
+                    <div class="results">
+                        <div class="result">
+                            <span>Total Skor</span>
+                            <strong>${score} XP</strong>
+                        </div>
+                        <div class="result">
+                            <span>Streak Tertinggi</span>
+                            <strong>🔥 ${bestStreak}</strong>
+                        </div>
+                    </div>
+
+                    <div class="game-buttons">
+                        <button class="start-btn" onclick="startGame()">Coba Lagi 🔄</button>
+                        <a href="progress.html" class="progress-btn">Lihat Progres 📊</a>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        /* =========================
+           INITIAL RENDER (START SCREEN)
+        ========================= */
+
+        function renderStartScreen() {
+            document.getElementById("game").innerHTML = `
+                <div class="start-screen">
+                    <div class="start-icon">🇩🇪</div>
+                    <h1>Quiz <span>Blitz Deutsch</span></h1>
+                    <p>Uji kemampuan kosa kata Bahasa Jerman (A1) kamu! Jawab pertanyaan sebelum waktu habis dan dapatkan XP terbanyak.</p>
+
+                    <div class="info-container">
+                        <div class="info-box">
+                            <div class="icon">❤️</div>
+                            <strong>3 Nyawa</strong><br>
+                            <small>Kesempatan salah</small>
+                        </div>
+                        <div class="info-box">
+                            <div class="icon">⏱️</div>
+                            <strong>Waktu</strong><br>
+                            <small>Makin cepat di level tinggi</small>
+                        </div>
+                        <div class="info-box">
+                            <div class="icon">🔥</div>
+                            <strong>Streak</strong><br>
+                            <small>Bonus XP berturut-turut</small>
+                        </div>
+                    </div>
+
+                    <button class="start-btn" onclick="startGame()">Mulai Quiz 🚀</button>
+                </div>
+            `;
+        }
+
+        // Jalankan tampilan awal saat halaman dimuat
+        renderStartScreen();
+
+    </script>
+</body>
+</html>
