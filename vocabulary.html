@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary - Blitz Deutsch</title>
+  <style>
+    body{
+      font-family:Arial,sans-serif;
+      background:#f5f9ff;
+      margin:0;
+      color:#222;
+    }
+    nav{
+      background:#2563eb;
+      padding:15px;
+      display:flex;
+      justify-content:space-around;
+    }
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+    }
+    .container{
+      max-width:700px;
+      margin:auto;
+      padding:20px;
+    }
+    h1{text-align:center;color:#2563eb;}
+    .card{
+      background:white;
+      padding:18px;
+      border-radius:15px;
+      margin:12px 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 3px 10px rgba(0,0,0,.08);
+    }
+    button{
+      background:#2563eb;
+      color:white;
+      border:none;
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="vocabulary.html">Vocabulary</a>
+  <a href="phrases.html">Phrases</a>
+  <a href="quiz.html">Quiz</a>
+</nav>
+
+<div class="container">
+  <h1>📚 German Vocabulary A1</h1>
+
+  <div class="card">
+    <div><b>Hallo</b><br>Halo</div>
+    <button onclick="speak('Hallo')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Danke</b><br>Terima kasih</div>
+    <button onclick="speak('Danke')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Bitte</b><br>Sama-sama / Silakan</div>
+    <button onclick="speak('Bitte')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Wasser</b><br>Air</div>
+    <button onclick="speak('Wasser')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Brot</b><br>Roti</div>
+    <button onclick="speak('Brot')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Freund</b><br>Teman</div>
+    <button onclick="speak('Freund')">🔊</button>
+  </div>
+
+  <div class="card">
+    <div><b>Musik</b><br>Musik</div>
+    <button onclick="speak('Musik')">🔊</button>
+  </div>
+
+</div>
+
+<script>
+function speak(word){
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = "de-DE";
+  u.rate = 0.9;
+  speechSynthesis.speak(u);
+}
+</script>
+
+</body>
+</html>
